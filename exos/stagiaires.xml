@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<stagiaires xmlns="http://www.ensg.eu/xml1-a/0.0.1"
+            xmlns:xml1-a="http://www.ensg.eu/xml1-a/0.0.1"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.ensg.eu/xml1-a/0.0.1 stagiaires.xsd"
+>
+    <personne nom="NOM1" prenom="PRÉNOM1" service="SERVICE1" lieu="LIEU1">
+        <fonction>FONCTION1</fonction>
+    </personne>
+    <personne nom="NOM2" prenom="PRÉNOM2" service="SERVICE2" lieu="LIEU2">
+        <fonction>FONCTION2</fonction>
+    </personne>
+    <employeurs>
+        <employeur nom="IGN">
+            <direction nom="DIRECTION1">
+                <service nom="SERVICE1" nbAgents="1"/>
+            </direction>
+            <direction nom="DIRECTION2">
+                <service nom="SERVICE2" nbAgents="1"/>
+            </direction>
+        </employeur>
+    </employeurs>
+    <lieuxDeTravail>
+        <lieuDeTravail nom="LIEU1">
+rue
+code postal ville
+        </lieuDeTravail>
+        <lieuDeTravail nom="LIEU2">
+rue
+code postal ville
+        </lieuDeTravail>
+    </lieuxDeTravail>
+</stagiaires>
+

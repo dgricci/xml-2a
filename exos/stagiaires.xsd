@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema targetNamespace="http://www.ensg.eu/xml1-a/0.0.1"
+            xmlns:xml1-a="http://www.ensg.eu/xml1-a/0.0.1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            version="0.0.1"
+            xml:lang="fr">
+    <xsd:element name="stagiaires">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="xml1-a:personne" minOccurs="1" maxOccurs="unbounded" />
+                <xsd:element ref="xml1-a:employeurs" />
+                <xsd:element ref="xml1-a:lieuxDeTravail" />
+            </xsd:sequence>
+        </xsd:complexType>
+        <!-- l'attribut nom est une clef de l'élément service : -->
+        <xsd:key name="ServiceID">
+            <xsd:selector xpath=".//xml1-a:service"/>
+            <xsd:field xpath="@nom"/>
+        </xsd:key>
+        <!-- l'attribut service de l'élément personne est une référence à
+             l'attribut nom de l'élément service : -->
+        <xsd:keyref name="ServiceIDReference" refer="xml1-a:ServiceID">
+            <xsd:selector xpath=".//xml1-a:personne"/>
+            <xsd:field xpath="@service"/>
+        </xsd:keyref>
+        <!-- l'attribut nom est une clef de l'élément lieuDeTravail : -->
+        <xsd:key name="LieuID">
+            <xsd:selector xpath=".//xml1-a:lieuDeTravail"/>
+            <xsd:field xpath="@nom"/>
+        </xsd:key>
+        <!-- l'attribut lieu de l'élément personne est une référence à l'attribut
+             nom de l'élément lieuDeTravail : -->
+        <xsd:keyref name="LieuIDReference" refer="xml1-a:LieuID">
+            <xsd:selector xpath=".//xml1-a:personne"/>
+            <xsd:field xpath="@lieu"/>
+        </xsd:keyref>
+        <!-- l'attribut nom est une clef de l'élément direction : -->
+        <xsd:key name="DirectionID">
+            <xsd:selector xpath=".//xml1-a:direction"/>
+            <xsd:field xpath="@nom"/>
+        </xsd:key>
+        <!-- l'attribut nom est une clef de l'élément employeur : -->
+        <xsd:key name="EmployeurID">
+            <xsd:selector xpath=".//xml1-a:employeur"/>
+            <xsd:field xpath="@nom"/>
+        </xsd:key>
+    </xsd:element>
+    <xsd:element name="personne">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="xml1-a:fonction" />
+            </xsd:sequence>
+            <xsd:attribute name="nom" type="xsd:string" use="required"/>
+            <xsd:attribute name="prenom" type="xsd:string" use="required"/>
+            <xsd:attribute name="service" type="xsd:IDREF" use="required"/>
+            <xsd:attribute name="lieu" type="xsd:IDREF" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="fonction">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="FONCTION1"/>
+                <xsd:enumeration value="FONCTION2"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:element>
+    <xsd:element name="employeurs">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="xml1-a:employeur" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="employeur">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="xml1-a:direction" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+            <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="direction">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="xml1-a:service" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+            <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="service">
+        <xsd:complexType>
+            <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+            <xsd:attribute name="nbAgents" type="xsd:positiveInteger" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="lieuxDeTravail">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="xml1-a:lieuDeTravail" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="lieuDeTravail">
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                    <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
+
