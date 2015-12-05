@@ -1,4 +1,4 @@
-# xml-1a
+# xml-2a
 
 Cours d'initiation à XML (deuxième partie).
 
