@@ -14,7 +14,7 @@ Plate-forme de test : Ubuntu 14.04.2
 Pour cloner complètement ce projet :
 
 ```
-$ git clone --recursive https://github.com/dgricci/xml-1a
+$ git clone --recursive https://github.com/dgricci/xml-2a
 ```
 
 ## Post-installation de reveal.js ##
