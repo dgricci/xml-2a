@@ -1166,7 +1166,7 @@ document XML au regard du schéma en cliquant sur le bouton `Check XML against X
 ### Consignes ###
 
 * Transformer le fichier XML des stagiaires en une page web :
-    * Écriver le fichier XSL ;
+    * Écrire le fichier XSL ;
     * Valider-le ;
     * Trouvez un service en ligne qui effectuera la transformation.
 
