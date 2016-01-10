@@ -1,6 +1,6 @@
-% S'initier à XML
+% S'initier à XML - partie II
 % Didier RICHARD - IGN/DRE/ValiLab
-% 05/12/2015
+% 10/01/2016
 
 # XSD #
 
@@ -89,17 +89,23 @@ le langage de DTD.**
     dans un autre schéma :
 
 ```xml
-<xsd:include id="ID" schemaLocation="anyURI"
-             {tout attribut ayant un espace de noms différent de celui du schéma...}/>
+<xsd:include id="ID" schemaLocation="anyURI" />
 ```
 
 * L'élément `xsd:import` permet d'importer un schéma XML avec un espace de noms
     différent dans un autre schéma :
 
 ```xml
-<xsd:import id="ID" namespace="anyURI" schemaLocation="anyURI"
-            {tout attribut ayant un espace de noms différent de celui du schéma...}/>
+<xsd:import id="ID" namespace="anyURI" schemaLocation="anyURI" />
 ```
+
+## La définition des types ##
+
+Il est possible de définir des types dit simples ou des types complexes. Ils
+diffèrent par :
+
+* les types simples ne peuvent pas avoir d'éléments fils ou d'attributs ;
+* les types complexes peuvent avoir des éléments fils et des attributs !
 
 ## La définition d’un élément ##
 
@@ -166,7 +172,9 @@ le langage de DTD.**
   lesquelles on pourra retenir `string`, `integer`, `float`, `time`,
   `dateTime`, etc …
 * On peut donc couvrir la majorité des cas qu’on rencontrera pour les types
-  simples.
+  simples ;
+* Un `simpleType` ne peut être fils que des balises `attribute`, `element`,
+  `list`, `restriction`, `schema`, `union`.
 
 ## Les types simples personnalisés (1/4) ##
 
@@ -239,6 +247,9 @@ le langage de DTD.**
 
 ## Les types complexes avec simpleContent ##
 
+* Un `simpleContent` définit des extensions ou restrictions sur un type
+  complexe ne contenant que du texte ou sur un type simple. Il ne peut être
+  fils que de l'élément `complexType` ;
 * On peut les dériver à partir des types simples en y ajoutant simplement un
   attribut par exemple de la manière suivante :
 
@@ -252,9 +263,42 @@ le langage de DTD.**
 </xsd:complexType>
 ```
 
-## Les types complexes (1/3) ##
+## Restriction et extension ##
 
-* Dans tous les autres cas, on décrit soit une séquence d’éléments (`sequence`) :
+* L’extension permet d’étendre la définition d’un élément ou d’un attribut XML
+  à un autre type de données spécifié ;
+* La restriction permet de restreindre les données permises dans un élément ou
+  un attribut XML.
+
+```xml
+<xsd:complexType name="type_donation">
+    <xsd:simpleContent> 
+        <xsd:extension base="niveau_don">
+            <xsd:attribute name="monnaie" type="xsd:string" use="required"/> 
+        </xsd:extension> 
+    </xsd:simpleContent>
+</xsd:complexType> 
+<xsd:simpleType name="niveau_don"> 
+    <xsd:restriction base="xsd:nonNegativeInteger"> 
+        <xsd:minExclusive value="49"/> 
+        <xsd:maxExclusive value="501"/> 
+    </xsd:restriction> 
+</xsd:simpleType>
+```
+
+## Les types complexes (1/4) ##
+
+* Un type complexe est un élément XML qui contient d'autres éléments ou des
+  attributs. Il peut définir :
+    * une suite d'éléments via `sequence` ;
+    * une alternative d'élements via `choice` ;
+    * un contenu sans ordre précis via `all`.
+* Un type complexe ne peut être fils que des éléments `element`, `redefine`,
+  `schema`.
+
+## Les types complexes (2/4) ##
+
+* On décrit soit une séquence d’éléments (`sequence`) :
 
 ```xml
 <xsd:element name="element_1" type="xsd:integer"/>
@@ -277,7 +321,7 @@ le langage de DTD.**
 </xsd:complexType>
 ```
 
-## Les types complexes (2/3) ##
+## Les types complexes (3/4) ##
 
 * soit un choix parmi les éléments (`choice`) :
 
@@ -300,7 +344,7 @@ le langage de DTD.**
 </xsd:complexType>
 ```
 
-## Les types complexes (3/3) ##
+## Les types complexes (4/4) ##
 
 * soit tous les éléments sans ordre précis (`all`) :
 
@@ -319,6 +363,32 @@ le langage de DTD.**
                </xsd:restriction>
          </xsd:simpleType>
     </xsd:attribute>
+</xsd:complexType>
+```
+
+## L’ élément complexContent ##
+
+* L’élément `complexContent` permet de définir un contenu complexe pour un élément
+  XML par restriction ou extension sur un type complexe. Il ne peut être fils
+que de l'élément `complexType` :
+
+```xml
+<xsd:complexType name="type_personne" block="restriction">
+    <xsd:sequence>
+        <xsd:element name="nom" type="xsd:string"/>
+        <xsd:element name="prenom" type="xsd:string"/>
+        <xsd:element name="adresse" type="xsd:string"/>
+    </xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="type_francaise">
+    <xsd:complexContent>
+        <xsd:extension base="type_personne">
+            <xsd:sequence>
+                <xsd:element name="code_postal" type="xsd:positiveInteger"/>
+                <xsd:element name="ville" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:extension>
+    </xsd:complexContent>
 </xsd:complexType>
 ```
 
@@ -350,56 +420,50 @@ le langage de DTD.**
 
 ## Les attributs ##
 
-* Pour chaque type complexe on peut définir les attributs associés soit à l’aide
+* Pour chaque type complexe, on peut définir les attributs associés soit à l’aide
 de `attribute` soit à l’aide de `attributeGroup` qui fonctionne de la même
 manière que `group` à savoir qu’on y fait référence ensuite.
 
-## L’ élément complexContent ##
+## Liaison XML et XSD (1/2) ##
 
-* L’élément `complexContent` permet de définir un contenu complexe pour un élément
-  XML :
+Il faut :
+
+* déclarer l'espace de nommage du schéma du document :
+    * son préfixe complet ;
+    * éventuellement, le déclarer comme préfixe par défaut.
+* définir la localisation du schéma via l'utilisation de l'espace de nommage
+  `xsi` :
+    * en déclarant cet espace de nommage via `xmlns:xsi` ;
+    * en indiquant si le schéma est local (comme `SYSTEM` de la DTD) via
+      l'attribut `xsi:noNamespaceSchemaLocation` qui donne le chemin d'accès
+      au XSD ;
+    * ou en indiquant si le schéma est externe (comme `PUBLIC` de la DTD) via
+      l'attribut `xsi:schemaLocation` qui lie URI et URL.
+
+## Liaison XML et XSD (2/2) ##
+
+Soit :
 
 ```xml
-<xsd:complexType name="type_personne" block="restriction">
-    <xsd:sequence>
-        <xsd:element name="nom" type="xsd:string"/>
-        <xsd:element name="prenom" type="xsd:string"/>
-        <xsd:element name="adresse" type="xsd:string"/>
-    </xsd:sequence>
-</xsd:complexType>
-<xsd:complexType name="type_francaise">
-    <xsd:complexContent>
-        <xsd:extension base="type_personne">
-            <xsd:sequence>
-                <xsd:element name="code_postal" type="xsd:positiveInteger"/>
-                <xsd:element name="ville" type="xsd:string"/>
-            </xsd:sequence>
-        </xsd:extension>
-    </xsd:complexContent>
-</xsd:complexType>
+<baliseRacine
+    xmlns="URIduSchema"
+    xmlns:monEspace="URIduSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="URIduSchema cheminLocal/Schema.xsd"
+>
+</baliseRacine>
 ```
 
-## Restriction et extension ##
-
-* L’extension permet d’étendre la définition d’un élément ou d’un attribut XML
-  à un autre type de données spécifié ;
-* La restriction permet de restreindre les données permises dans un élément ou
-  un attribut XML.
+ou :
 
 ```xml
-<xsd:complexType name="type_donation">
-    <xsd:simpleContent> 
-        <xsd:extension base="niveau_don">
-            <xsd:attribute name="monnaie" type="xsd:string" use="required"/> 
-        </xsd:extension> 
-    </xsd:simpleContent>
-</xsd:complexType> 
-<xsd:simpleType name="niveau_don"> 
-    <xsd:restriction base="xsd:nonNegativeInteger"> 
-        <xsd:minExclusive value="49"/> 
-        <xsd:maxExclusive value="501"/> 
-    </xsd:restriction> 
-</xsd:simpleType>
+<baliseRacine
+    xmlns="URIduSchema"
+    xmlns:monEspace="URIduSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="URIduSchema URLduSchema/Schema.xsd"
+>
+</baliseRacine>
 ```
 
 ## Exercice n°4 ##

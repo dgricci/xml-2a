@@ -1,6 +1,6 @@
-% Initiation à XML
+% Initiation à XML - partie II
 % Véronique Lemaire, Didier Richard
-% rèv. 2.2.0 du 05/12/2015
+% rèv. 2.3.0 du 10/01/2016
 
 ---
 
@@ -117,16 +117,14 @@ L'élément `include` permet d'inclure un schéma XML d'un même espace de noms 
 un autre schéma pour l'utiliser :
 
 ```xml
-<xsd:include id="ID" schemaLocation="anyURI"
-             {tout attribut ayant un espace de noms différent de celui du schéma...}/>
+<xsd:include id="ID" schemaLocation="anyURI" />
 ```
 
 L'élément `import` permet d'importer un schéma XML avec un espace de noms
 différent dans un autre schéma pour l'utiliser :
 
 ```xml
-<xsd:import id="ID" namespace="anyURI" schemaLocation="anyURI"
-            {tout attribut ayant un espace de noms différent de celui du schéma...}/>
+<xsd:import id="ID" namespace="anyURI" schemaLocation="anyURI" />
 ```
 
 L’élément `xsd:element` permet de définir un élément du document XML et d’y
@@ -193,6 +191,8 @@ informatique du terme.
 Il en existe une liste assez longue d’une quarantaine de possibilités parmi
 lesquelles on pourra retenir `xsd:string`, `xsd:integer`, `xsd:decimal`,
 `xsd:time`, `xsd:boolean`, `xsd:date` …
+
+![&copy; W3C XML Schema Part 2: Datatypes, built-in datatypes](img/type-hierarchy.png)
 
 On peut donc couvrir la majorité des cas qu’on rencontrera pour les types
 simples.
@@ -447,6 +447,86 @@ donnera par exemple :
     <code_postal>1</code_postal>
     <ville>VILLE</ville>
 </personne>
+```
+
+#### Déclaration d'un schéma pour un XML ####
+
+Plusieurs notions entrent en jeu pour lier un document XML et son schéma,
+ainsi que les schémas nécessaires à la compréhension des données.
+
+Tout d'abord, le schéma qui décrit la structure des données appartient à un
+espace de nommage qu'il convient de déclarer :
+
+```xml
+<monEspace:baliseRacine
+    xmlns:monEspace="URIduSchema"
+>
+</monEspace:baliseRacine>
+```
+
+Il est possible aussi d'indiquer que cet espace de nommage est celui par
+défaut pour éviter d'avoir à préfixer toutes les balises dans le document :
+
+```xml
+<baliseRacine
+    xmlns="URIduSchema"
+    xmlns:monEspace="URIduSchema"
+>
+</baliseRacine>
+```
+
+À l'instar des DTD où il est nécessaire d'indiquer si elle est locale
+(`SYSTEM`) ou externe (`PUBLIC`), il est conseiller d'indiquer où se trouve le
+schéma du document XML via l'un des attribut `xsi:noNamespaceSchemaLocation`
+quand le schéma est local ou `xsi:schemaLocation` s'il est externe. Ce
+faisant, on introduit un nouvel espace de nommage qu'il convient de définir :
+
+```xml
+<baliseRacine
+    xmlns="URIduSchema"
+    xmlns:monEspace="URIduSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+</baliseRacine>
+```
+
+On utilise ensuite l'un des attributs `xsi:noNamespaceSchemaLocation` ou
+`xsi:schemaLocation` pour lier l'URI et la localisation du schéma. Plusieurs
+associations sont possibles :
+
+```xml
+<baliseRacine
+    xmlns="URIduSchema"
+    xmlns:monEspace="URIduSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="URIduSchema cheminLocal/Schema.xsd"
+>
+</baliseRacine>
+```
+
+Exemple d'une déclation multiples :
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<CT_CrsCatalogue
+    xmlns="http://www.isotc211.org/2005/gmx"
+    xmlns:gco="http://www.isotc211.org/2005/gco"
+    xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:gmx="http://www.isotc211.org/2005/gmx"
+    xmlns:gml="http://www.opengis.net/gml"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+http://www.isotc211.org/2005/gco http://interop.ign.fr/schemas/iso/gco/gco.xsd
+http://www.isotc211.org/2005/gmd http://interop.ign.fr/schemas/iso/gmd/gmd.xsd
+http://www.isotc211.org/2005/gmx http://interop.ign.fr/schemas/iso/gmx/gmx.xsd
+http://www.opengis.net/gml http://interop.ign.fr/schemas/iso/gml/base/gml.xsd
+http://www.w3.org/1999/xlink http://interop.ign.fr/schemas/iso/gml/xlink/xlinks.xsd">
+<!-- les associations URI URL ont été mises sur plusieurs lignes pour
+faciliter leur lecture. Dans un document correctement formé l'attribut est sur
+une seule ligne ! -->
+...
+</CT_CrsCatalogue>
 ```
 
 ## XSL : la feuille de style du XML ##
