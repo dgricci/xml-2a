@@ -5,7 +5,21 @@
             elementFormDefault="qualified"
             version="0.0.1"
             xml:lang="fr">
+    <!-- il est possible de documenter le schéma avec des commentaires
+         mais l'utilisation des annotations est préférable !
+      -->
+    <xsd:annotation>
+        <xsd:appinfo>stagiaires.xsd</xsd:appinfo>
+        <xsd:documentation>
+Ce schéma décrit une session de formation où les
+stagiaires sont des employés d'une organisation découpée
+en directions et services.
+        </xsd:documentation>
+    </xsd:annotation>
     <xsd:element name="stagiaires">
+        <xsd:annotation>
+            <xsd:documentation>La classe</xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="xml1-a:personne" minOccurs="1" maxOccurs="unbounded" />
@@ -13,51 +27,108 @@
                 <xsd:element ref="xml1-a:lieuxDeTravail" />
             </xsd:sequence>
         </xsd:complexType>
-        <!-- l'attribut nom est une clef de l'élément service : -->
         <xsd:key name="ServiceID">
+            <xsd:annotation>
+                <xsd:documentation>
+l'attribut nom est une clef de l'élément service
+                </xsd:documentation>
+            </xsd:annotation>
             <xsd:selector xpath=".//xml1-a:service"/>
             <xsd:field xpath="@nom"/>
         </xsd:key>
-        <!-- l'attribut service de l'élément personne est une référence à
-             l'attribut nom de l'élément service : -->
         <xsd:keyref name="ServiceIDReference" refer="xml1-a:ServiceID">
+            <xsd:annotation>
+                <xsd:documentation>
+l'attribut service de l'élément personne
+est une référence à l'attribut nom de l'élément service.
+                </xsd:documentation>
+            </xsd:annotation>
             <xsd:selector xpath=".//xml1-a:personne"/>
             <xsd:field xpath="@service"/>
         </xsd:keyref>
-        <!-- l'attribut nom est une clef de l'élément lieuDeTravail : -->
         <xsd:key name="LieuID">
+            <xsd:annotation>
+                <xsd:documentation>
+l'attribut nom est une clef de l'élément lieuDeTravail
+                </xsd:documentation>
+            </xsd:annotation>
             <xsd:selector xpath=".//xml1-a:lieuDeTravail"/>
             <xsd:field xpath="@nom"/>
         </xsd:key>
-        <!-- l'attribut lieu de l'élément personne est une référence à l'attribut
-             nom de l'élément lieuDeTravail : -->
         <xsd:keyref name="LieuIDReference" refer="xml1-a:LieuID">
+            <xsd:annotation>
+                <xsd:documentation>
+l'attribut lieu de l'élément personne est une référence à l'attribut
+nom de l'élément lieuDeTravail
+                </xsd:documentation>
+            </xsd:annotation>
             <xsd:selector xpath=".//xml1-a:personne"/>
             <xsd:field xpath="@lieu"/>
         </xsd:keyref>
-        <!-- l'attribut nom est une clef de l'élément direction : -->
         <xsd:key name="DirectionID">
+            <xsd:annotation>
+                <xsd:documentation>
+l'attribut nom est une clef de l'élément direction
+                </xsd:documentation>
+            </xsd:annotation>
             <xsd:selector xpath=".//xml1-a:direction"/>
             <xsd:field xpath="@nom"/>
         </xsd:key>
-        <!-- l'attribut nom est une clef de l'élément employeur : -->
         <xsd:key name="EmployeurID">
+            <xsd:annotation>
+                <xsd:documentation>
+l'attribut nom est une clef de l'élément employeur
+                </xsd:documentation>
+            </xsd:annotation>
             <xsd:selector xpath=".//xml1-a:employeur"/>
             <xsd:field xpath="@nom"/>
         </xsd:key>
     </xsd:element>
     <xsd:element name="personne">
+        <xsd:annotation>
+            <xsd:documentation>
+Un stagiaire est une personne qui travaille
+dans un service et dans un lieu de travail
+            </xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="xml1-a:fonction" />
             </xsd:sequence>
-            <xsd:attribute name="nom" type="xsd:string" use="required"/>
-            <xsd:attribute name="prenom" type="xsd:string" use="required"/>
-            <xsd:attribute name="service" type="xsd:IDREF" use="required"/>
-            <xsd:attribute name="lieu" type="xsd:IDREF" use="required"/>
+            <xsd:attribute name="nom" type="xsd:string" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+Nom de famille (ou familly name)
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="prenom" type="xsd:string" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+Prénom (ou first name)
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="service" type="xsd:IDREF" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+Référence au service auquel appartient cette personne
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="lieu" type="xsd:IDREF" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+Référence au lieu où travaille cette personne
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="fonction">
+        <xsd:annotation>
+            <xsd:documentation>L'emploi ou l'occupation de la personne</xsd:documentation>
+        </xsd:annotation>
         <xsd:simpleType>
             <xsd:restriction base="xsd:string">
                 <xsd:enumeration value="FONCTION1"/>
@@ -66,6 +137,9 @@
         </xsd:simpleType>
     </xsd:element>
     <xsd:element name="employeurs">
+        <xsd:annotation>
+            <xsd:documentation>Container des employeurs des stagiaires</xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="xml1-a:employeur" minOccurs="1" maxOccurs="unbounded" />
@@ -73,28 +147,66 @@
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="employeur">
+        <xsd:annotation>
+            <xsd:documentation>Un employeur</xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="xml1-a:direction" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
-            <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+            <xsd:attribute name="nom" type="xsd:ID" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+Nom de l'employeur qui sert d'identifiant pour ce dernier
+(un acronyme pourra faire l'affaire)
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="direction">
+        <xsd:annotation>
+            <xsd:documentation>Une sous-organisation dirigée par un directeur</xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="xml1-a:service" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
-            <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+            <xsd:attribute name="nom" type="xsd:ID" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+Nom de la direction qui sert d'identifiant (un acronyme fera l'affaire)
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="service">
+        <xsd:annotation>
+            <xsd:documentation>Une sous-organisation d'une direction</xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
-            <xsd:attribute name="nom" type="xsd:ID" use="required"/>
-            <xsd:attribute name="nbAgents" type="xsd:positiveInteger" use="optional"/>
+            <xsd:attribute name="nom" type="xsd:ID" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+Nom du service qui sert d'identifiant (un acronyme fera l'affaire)
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="nbAgents" type="xsd:positiveInteger" use="optional">
+                <xsd:annotation>
+                    <xsd:documentation>
+Nombre de stagiaires appartenant au service.
+Certains sont présents à la session de formation
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="lieuxDeTravail">
+        <xsd:annotation>
+            <xsd:documentation>Container des lieux de travail</xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="xml1-a:lieuDeTravail" minOccurs="1" maxOccurs="unbounded" />
@@ -102,14 +214,27 @@
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="lieuDeTravail">
+        <xsd:annotation>
+            <xsd:documentation>Une adresse d'un lieu de travail</xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
-                    <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+                    <xsd:attribute name="nom" type="xsd:ID" use="required">
+                        <xsd:annotation>
+                            <xsd:documentation>
+Nom du lieu de travail qui sert d'identifiant (un acronyme fera l'affaire)
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:attribute>
                     <xsd:attribute name="coordinates" use="optional">
-                        <!-- longitude,latitude -->
-                        <!-- -180 < longitude <= 180 -->
-                        <!--  -90 < latitude  <=  90 -->
+                        <xsd:annotation>
+                            <xsd:documentation>
+Représente la longitude,latitude en degrés décimaux du lieu sachant que :
+* -180 &lt; longitude &lt;= 180
+* -90 &lt; latitude  &lt;=  90
+                            </xsd:documentation>
+                        </xsd:annotation>
                         <xsd:simpleType>
                             <xsd:restriction base="xsd:string">
                                 <xsd:pattern value="-?\d+(\.\d+)?,-?\d+(\.\d+)"/>
