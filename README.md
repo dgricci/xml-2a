@@ -36,7 +36,11 @@ Dans le répertoire du projet :
 
 ```bash
 $ cd externals/reveal.js
-$ http_proxy=host:port https_proxy=host:port npm install
+$ http_proxy=host:port https_proxy=host:port npm install grunt
+$ http_proxy=host:port https_proxy=host:port npm install grunt-contrib-qunit \
+    grunt-contrib-jshint grunt-contrib-cssmin grunt-contrib-uglify \
+    grunt-contrib-watch grunt-sass grunt-contrib-connect grunt-autoprefixer \
+    grunt-zip
 $ grunt cssmin uglify
 ```
 
