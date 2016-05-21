@@ -1,6 +1,6 @@
 % Initiation à XML - partie II
 % Véronique Lemaire, Didier Richard
-% rèv. 2.3.0 du 10/01/2016
+% rèv. 2.3.1 du 11/01/2016
 
 ---
 
@@ -531,13 +531,13 @@ une seule ligne ! -->
 
 ## XSL : la feuille de style du XML ##
 
-Tout comme par XSD, cette partie du cours est encore plus complexe !
+Tout comme pour XSD, cette partie du cours est encore plus complexe !
 
 ### Généralités ###
 
 
 Le langage XSL[^xsl] est à XML ce que CSS est à HTML dans une première
-approche: il permet d’effectuer une visualisation du contenu décrit dans un
+approche : il permet d’effectuer une visualisation du contenu décrit dans un
 fichier XML.
 
 Le langage XSL se divise en deux parties principales :
@@ -545,19 +545,19 @@ Le langage XSL se divise en deux parties principales :
 * Le formatage : application de règles de style sur des éléments XML à l'instar
   du langage CSS ;
 * La transformation : substitution d'un marquage XML en un balisage HTML ou un
-  autre marquage XML. 
+  autre marquage XML ou rien (texte) !
 
 La partie formatage du langage XSL (e*X*tensible *S*tylesheet *L*anguage) a une
-fonction semblable à celle du langage CSS (*C*ascading *S*tyle*S*heet).
+fonction semblable à celle du langage CSS (*C*ascading *S*tyle*S*heet) en ce
+qu'elle applique des règles à des éléments ou attributs du XML.
 
 Le langage XSL, par une série de règles de transformation, remplace les
 éléments XML et leurs attributs en balisage HTML (*H*yper*T*ext *M*arkup *L*anguage)
-ou en d'autres marqueurs XML. Cette section du langage XSL s'appelle
-XSLT[^xslt] soit Langage des feuilles de Style de Transformation dont les
+ou en d'autres marqueurs XML ou en texte brut. Cette section du langage XSL
+s'appelle XSLT[^xslt], soit Langage des feuilles de Style de Transformation dont les
 spécifications sont mises au point par le W3C (World Wide Web Consortium). 
 
-Cela s’applique de cette manière par exemple sur un document XML qui
-contiendrait cet ordre :
+Par exemple, un document XML qui contiendrait cet ordre est régi par XSLT :
 
 ```xml
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
@@ -572,7 +572,8 @@ On peut appliquer du XSL de trois manières :
    technologies XML/XSL ;
 3. Enfin, la dernière solution consiste à installer un moteur de transformation
    XML nommé XT (XML Transformer) associé à un analyseur (ou parser) conforme à
-   SAX (Simple API for XML) ou DOM (Document Object Model).
+   SAX (Simple API for XML) ou DOM (Document Object Model). C'est la solution
+   la plus commune (CGI, Node.js, etc ...).
 
 De nombreux programmes permettent de mettre à niveau son serveur :
 
@@ -584,9 +585,10 @@ De nombreux programmes permettent de mettre à niveau son serveur :
 
 L’entête d’un fichier XSL se compose :
 
-* De l’entête d’un fichier XML (puisqu’un fichier XSL est un fichier XML) ;
-* Des espaces de noms correspondant
-* Du document de sortie.
+* Du prologue d’un fichier XML (puisqu’un fichier XSL est un fichier XML !) ;
+* Des espaces de noms correspondant (donc au moins `xmlns:xsl`);
+* Du document de sortie (vers quoi on transforme le document XML).
+  Globalement, on utilise `html`, `xml` (par défaut) ou `text`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -646,7 +648,7 @@ XPATH[^xpath] que nous étudierons dans le paragraphe suivant.
 |                         | courant                                              |
 +-------------------------+------------------------------------------------------+
 | x/y[position()>1]       | tout élément de nom y, fils de l'élément x fils de   |
-|                         | l'élément courant, sauf le premier fils de x         |
+|                         | l'élément courant, sauf le premier fils y de x       |
 +-------------------------+------------------------------------------------------+
 | x[position() mod 2 = 1] | tout élément de nom x, fils de rang impair de        |
 |                         | l'élément courant                                    |
@@ -655,8 +657,8 @@ XPATH[^xpath] que nous étudierons dans le paragraphe suivant.
 |                         | nom x pour lequel l'attribut a vaut "v", x est fils  |
 |                         | de l'élément courant                                 |
 +-------------------------+------------------------------------------------------+
-| x/@a                    | tous les attributs a des éléments de nom x, fils de  |
-|                         | l'élément courant                                    |
+| x/@a                    | tous les attributs "a" des éléments de nom x, fils   |
+|                         | de l'élément courant                                 |
 +-------------------------+------------------------------------------------------+
 | @*                      | tous les attributs de l'élément courant et de ses    |
 |                         | descendants                                          |
@@ -665,12 +667,13 @@ XPATH[^xpath] que nous étudierons dans le paragraphe suivant.
 
 ### Le langage XPath ###
 
-On utilise les patterns pour pouvoir sélectionner les nœuds et on applique 
+On utilise les patterns pour pouvoir sélectionner les nœuds (on se rappelle
+qu'un document XML est un arbre ...).
 Un axe nodal ouvre des « directions de recherche » indiquées par le préfixe
-avant les patterns et les deux points
+avant les patterns et les deux points.
 Un prédicat est une expression entre crochets permettant de cibler au mieux
-une partie de l’arborescence XML
-Une fonction nodale peut être booléenne, calculatoire,…
+une partie de l’arborescence XML.
+Une fonction nodale peut être booléenne, calculatoire, etc …
 
 Le tableau suivant récapitule les principaux axes nodaux écrits de manière
 complète :
@@ -871,10 +874,21 @@ l’attribut :
         Valeur de l'attribut
     </xsl:attribute> 
     <xsl:attribute-set name="nom_jeu_attributs">
-        <xsl:attribute name="a1"> Valeur de l'attribut </xsl:attribute>
-        <xsl:attribute name="a2"> Valeur de l'attribut </xsl:attribute>
+        <xsl:attribute name="a1"> Valeur de l'attribut 1 </xsl:attribute>
+        <xsl:attribute name="a2"> Valeur de l'attribut 2 </xsl:attribute>
     </xsl:attribute-set>
 </xsl:element>
+```
+
+On génère ainsi un fragment XML qui vaut :
+
+```xml
+<!-- le préfixe associé à l'URI est noté pfx -->
+<!-- le préfixe associé à URI-référence est noté apfx -->
+<pfx:nomElement
+    a1=" Valeur de l'attribut 1 "
+    a2=" Valeur de l'attribut 2 " 
+    apfx:nom_attribut="Valeur de l'attribut"/>
 ```
 
 L'élément `choose` combiné avec `when` et `otherwise`, permet de
@@ -891,6 +905,14 @@ Javascript.
          instructions...
     </xsl:otherwise>
 </xsl:choose> 
+```
+
+L'élément `if` permet de construire un test simple (pas de sinon ...).
+
+```xml
+<xsl:if test="condition">
+    instructions...
+</xsl:if>
 ```
 
 Pour commencer un fichier XSL, on a deux possibilities en termes d’éléments
@@ -922,6 +944,7 @@ aucun caractère obligatoire.
 * <http://xml.developpez.com/cours/>
 * <http://www.liafa.jussieu.fr/~carton/Enseignement/XML/Cours/>
 * <http://www.gchagnon.fr/cours/xml/index.html>
+* <https://pages.lip6.fr/Jean-Francois.Perrot/inalco/XMLA/Cours2/XSLT/>
 
 
 ## Exercices ##
