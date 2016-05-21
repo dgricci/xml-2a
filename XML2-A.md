@@ -1048,6 +1048,13 @@ On commence par ré-écrire les `ELEMENT` et les `ATTLIST` :
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
                     <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+                    <xsd:attribute name="coordinates" use="optional">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:pattern value="-?\d+(\.\d+)?,-?\d+(\.\d+)"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:attribute>
                 </xsd:extension>
             </xsd:simpleContent>
         </xsd:complexType>
@@ -1203,6 +1210,16 @@ On obtient alors le schéma final `stagiaires.xsd` :
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
                     <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+                    <xsd:attribute name="coordinates" use="optional">
+                        <!-- longitude,latitude -->
+                        <!-- -180 < longitude <= 180 -->
+                        <!--  -90 < latitude  <=  90 -->
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:pattern value="-?\d+(\.\d+)?,-?\d+(\.\d+)"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:attribute>
                 </xsd:extension>
             </xsd:simpleContent>
         </xsd:complexType>
@@ -1245,7 +1262,7 @@ On remplace la DTD interne par l'utilisation du schéma :
         </employeur>
     </employeurs>
     <lieuxDeTravail>
-        <lieuDeTravail nom="LIEU1">
+        <lieuDeTravail nom="LIEU1" coordinates="0.0,0.0">
 rue
 code postal ville
         </lieuDeTravail>
