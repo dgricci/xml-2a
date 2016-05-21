@@ -106,6 +106,16 @@
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
                     <xsd:attribute name="nom" type="xsd:ID" use="required"/>
+                    <xsd:attribute name="coordinates" use="optional">
+                        <!-- longitude,latitude -->
+                        <!-- -180 < longitude <= 180 -->
+                        <!--  -90 < latitude  <=  90 -->
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:pattern value="-?\d+(\.\d+)?,-?\d+(\.\d+)"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:attribute>
                 </xsd:extension>
             </xsd:simpleContent>
         </xsd:complexType>

@@ -21,7 +21,7 @@
         </employeur>
     </employeurs>
     <lieuxDeTravail>
-        <lieuDeTravail nom="LIEU1">
+        <lieuDeTravail nom="LIEU1" coordinates="0.0,0.0">
 rue
 code postal ville
         </lieuDeTravail>
