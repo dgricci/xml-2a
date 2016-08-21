@@ -1,6 +1,6 @@
 % Initiation à XML - partie II
 % Véronique Lemaire, Didier Richard
-% rèv. 2.3.1 du 11/01/2016
+% rèv. 2.3.1 du 21/08/2016
 
 ---
 
@@ -32,7 +32,7 @@ Notes de [cours](XML2-a-slides).
 © IGN 2009 - Véronique Lemaire - Département Informatique (ENSG)\
 © IGN 2015 - Didier Richard - ValiLab (DRE)
 
-![](img/by-nc-sa.png)
+![Document sous licence Creatives Commons 3 BY-CC-SA](img/by-nc-sa.png)
 
 ---
 
@@ -97,6 +97,8 @@ deux ;
 schéma XML ;
 * `version` indique un numéro de version du schéma ;
 * `xml:lang` précise la langue dans laquelle est conçu le document.
+
+\newpage
 
 Et bien sûr on peut définir la liste de namespaces utilisés avec `xmlns`.
 Le préfixe de l'espace de noms des schémas est très souvent `xsd` ; la forme
@@ -220,7 +222,7 @@ Il est également possible de dériver des types simples :
 donnera par exemple :
 
 ```xml
-<entier>10001</entier
+<entier>10001</entier>
 ```
 
 ##### Définition d’un format #####
@@ -249,7 +251,7 @@ donnera par exemple :
         <xsd:enumeration value="Ain"/>
         <xsd:enumeration value="Aisne"/>
         <xsd:enumeration value="Allier"/>
-        <!-– etc -->
+        ...
     </xsd:restriction>
 </xsd:simpleType>
 
@@ -261,6 +263,8 @@ donnera par exemple :
 ```xml
 <departement>Seine-et-Marne</departement>
 ```
+
+\newpage
 
 ##### Liste #####
 
@@ -307,6 +311,8 @@ donnera par exemple :
 <prix monnaie="euro">42.0</prix>
 ```
 
+\newpage
+
 On peut décider de réaliser une séquence d’éléments de types définis. Dans
 l’exemple suivant, on voit comment faire référence à un élément
 défini par ailleurs dans le XSD et comment on définit les attributs (déjà vu dans
@@ -345,6 +351,8 @@ donnera par exemple :
 </entiers>
 ```
 
+\newpage
+
 On peut indiquer qu’un élément prend au choix une structure ou une autre comme
 dans l’exemple suivant :
 
@@ -380,6 +388,8 @@ donnera par exemple :
 </entiers>
 ```
 
+\newpage
+
 On peut enfin décrire une suite d’éléments simples sans ordre obligatoire :
 
 ```xml
@@ -412,8 +422,10 @@ donnera par exemple :
 <entiers id="02"/>
 ```
 
-Enfin on peut définir via la balise `complexContent`, un type plus complexe
-encore :
+\newpage
+
+De plus, on peut aussi définir, via la balise `complexContent`, un type plus
+complexe encore :
 
 ```xml
 <xsd:complexType name="type_personne" block="restriction">
@@ -464,6 +476,8 @@ espace de nommage qu'il convient de déclarer :
 </monEspace:baliseRacine>
 ```
 
+\newpage
+
 Il est possible aussi d'indiquer que cet espace de nommage est celui par
 défaut pour éviter d'avoir à préfixer toutes les balises dans le document :
 
@@ -476,7 +490,7 @@ défaut pour éviter d'avoir à préfixer toutes les balises dans le document :
 ```
 
 À l'instar des DTD où il est nécessaire d'indiquer si elle est locale
-(`SYSTEM`) ou externe (`PUBLIC`), il est conseiller d'indiquer où se trouve le
+(`SYSTEM`) ou externe (`PUBLIC`), il est conseillé d'indiquer où se trouve le
 schéma du document XML via l'un des attribut `xsi:noNamespaceSchemaLocation`
 quand le schéma est local ou `xsi:schemaLocation` s'il est externe. Ce
 faisant, on introduit un nouvel espace de nommage qu'il convient de définir :
@@ -504,7 +518,9 @@ associations sont possibles :
 </baliseRacine>
 ```
 
-Exemple d'une déclation multiples :
+\newpage
+
+Exemple d'une déclation avec des espaces de nommage multiples :
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -566,14 +582,16 @@ Par exemple, un document XML qui contiendrait cet ordre est régi par XSLT :
 On peut appliquer du XSL de trois manières :
 
 1. La première solution demande à l'ordinateur client de posséder impérativement
-  un navigateur compatible avec les technologies (tous désormais) ;
-2. La seconde solution demande un aménagement logiciel du serveur web avec par
+   un navigateur compatible avec les technologies (tous les navigateurs le sont
+   désormais) ;
+2. La seconde solution demande un aménagement logiciel du serveur web avec, par
    exemple, un programme XML Enabler d'IBM, afin de le rendre compatible aux
    technologies XML/XSL ;
 3. Enfin, la dernière solution consiste à installer un moteur de transformation
    XML nommé XT (XML Transformer) associé à un analyseur (ou parser) conforme à
    SAX (Simple API for XML) ou DOM (Document Object Model). C'est la solution
-   la plus commune (CGI, Node.js, etc ...).
+   la plus technique (CGI, Node.js, etc ...) et indépendante des ordinateurs
+   clients.
 
 De nombreux programmes permettent de mettre à niveau son serveur :
 
@@ -600,6 +618,8 @@ L’entête d’un fichier XSL se compose :
 ...
 </xsl:stylesheet>
 ```
+
+\newpage
 
 Les espaces de noms associés à XSL sont :
 
@@ -890,6 +910,8 @@ On génère ainsi un fragment XML qui vaut :
     a2=" Valeur de l'attribut 2 " 
     apfx:nom_attribut="Valeur de l'attribut"/>
 ```
+
+\newpage
 
 L'élément `choose` combiné avec `when` et `otherwise`, permet de
 construire des tests conditionnels à l'instar des commandes switch de Java ou
@@ -1333,6 +1355,8 @@ On écrit un patron pour l'en-tête :
 </xsl:template>
 ```
 
+\newpage
+
 Pour le corps, on fera un tableau qui occupe toute la page avec sur chaque
 ligne les informations sur les personnes :
 
@@ -1596,7 +1620,7 @@ On clique alors sur le bouton `Transform XML with XSL` !
 On obtient dans le champs "Result" la page HTML. On copie-colle ce champs dans
 `stagiaires.html` que l'on ouvre dans un butineur :
 
-![](img/stagiaires.png)
+![Résultat de la transformation en HTML](img/stagiaires.png)
 
 
 __Et voilà !__

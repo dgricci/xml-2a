@@ -1,6 +1,6 @@
 % S'initier à XML - partie II
 % Didier RICHARD - IGN/DRE/ValiLab
-% 10/01/2016
+% 21/08/2016
 
 # XSD #
 
@@ -1019,7 +1019,7 @@ $ xsltproc -o stagiaires.html stagiaires.xsl stagiaires.xml
 * http://www.liafa.jussieu.fr/~carton/Enseignement/XML/Cours/
 * http://www.gchagnon.fr/cours/xml/index.html
 
-![](img/by-nc-sa.png)
+![Document sous licence Creative Commons 3 BY-NC-SA](img/by-nc-sa.png)
 
 <div class="notes">
 * Validateurs :
@@ -1034,6 +1034,6 @@ $ xsltproc -o stagiaires.html stagiaires.xsl stagiaires.xml
 pandoc -s -t revealjs --slide-level=2 --section-divs --template=template/ign-ensg-revealjs.html --email-obfuscation=none --css=css/ign.css --highlight-style=kate -V revealjs-url=externals/reveal.js -V slideNumber=true -V transition=none -o XML2-A-slides.html XML2-A-slides.md
 ```
 
-* version des diapositives : 2.2.0
+* version des diapositives : 2.2.1
 </div>
 
