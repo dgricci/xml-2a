@@ -60,3 +60,14 @@ $ pandoc -s -t revealjs -i --slide-level=1 --self-contained -o README.html READM
 
 Puis d'ouvrir le fichier `README.html` dans un navigateur.
 
+## Impression ##
+
+* Ouvrir le ficher `README.html` dans un navigateur en ajoutant `?print-pdf`
+  dans l'URL ;
+* Imprimer :
+    * Paysage
+    * A4
+    * Pas de marge
+    * Impression des images de fond
+    * Enregistrer dans un fichier
+
