@@ -71,7 +71,7 @@
 .reveal .slides > section:first-child h1 {
     background-color: transparent;
     background-image: url("../img/slide/logo-ign.png"), url("../img/slide/logo-ensg.jpg");
-    background-position: left 80px, right 50px;
+    background-position: left 80px, right 65px;
     background-repeat: no-repeat;
     background-size: 154px 165px, 142px 150px;
     height: 60%;
