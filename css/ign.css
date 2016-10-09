@@ -70,10 +70,10 @@
 }
 .reveal .slides > section:first-child h1 {
     background-color: transparent;
-    background-image: url("../img/slide/ign-logo-ign.png"), url("../img/slide/ign-logo-ensg.jpg");
-    background-position: left top, right top;
+    background-image: url("../img/slide/logo-ign.png"), url("../img/slide/logo-ensg.jpg");
+    background-position: left 80px, right 50px;
     background-repeat: no-repeat;
-    background-size: 231px 249px, 142px 150px;
+    background-size: 154px 165px, 142px 150px;
     height: 60%;
 }
 .reveal .slides > section:first-child h3 {
@@ -122,4 +122,8 @@
     position: relative;
     left: 50%;
     bottom: 0%;
+}
+
+.reveal section img {
+    border: none !important;
 }
