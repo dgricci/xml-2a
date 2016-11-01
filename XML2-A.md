@@ -36,6 +36,7 @@ Notes de [cours](XML2-a-slides).
 
 ---
 
+\newpage
 
 ## Schémas XML (XSD) ##
 
@@ -79,6 +80,8 @@ Ce langage de schéma constitue donc une pièce essentielle dans la sphère XML,
 assurant une évolutivité, un dynamisme et une souplesse que ne pouvait assumer
 le langage de DTD.
 
+\newpage
+
 ### Généralités ###
 
 Le schéma commence par un élément racine, `xsd:schema` est la racine de tout
@@ -97,8 +100,6 @@ deux ;
 schéma XML ;
 * `version` indique un numéro de version du schéma ;
 * `xml:lang` précise la langue dans laquelle est conçu le document.
-
-\newpage
 
 Et bien sûr on peut définir la liste de namespaces utilisés avec `xmlns`.
 Le préfixe de l'espace de noms des schémas est très souvent `xsd` ; la forme
@@ -129,13 +130,14 @@ différent dans un autre schéma pour l'utiliser :
 <xsd:import id="ID" namespace="anyURI" schemaLocation="anyURI" />
 ```
 
+\newpage
+
 L’élément `xsd:element` permet de définir un élément du document XML et d’y
 associer des propriétés. Si on a un type simple (i.e. atomique et sans
 attributs), la définition se fait simplement, si on souhaite un type simple
 personnalisé on utilise la balise `<xsd:simpleType>` et si on souhaite un type
 complexe on utlise la balise `<xsd:complexType>` et enfin si on veut un
 groupe, on utilise la balise `<xsd:group>` !
-
 
 Les attributs associés à `xsd:element` sont répertoriés dans le tableau suivant :
 
@@ -183,6 +185,8 @@ Les attributs associés à `xsd:element` sont répertoriés dans le tableau suiv
 |                  |l'élément                                      |
 +------------------+-----------------------------------------------+
 
+\newpage
+
 #### Les types simples ####
 
 Un type simple est une balise XML qui ne contient que du texte, donc pas
@@ -194,7 +198,9 @@ Il en existe une liste assez longue d’une quarantaine de possibilités parmi
 lesquelles on pourra retenir `xsd:string`, `xsd:integer`, `xsd:decimal`,
 `xsd:time`, `xsd:boolean`, `xsd:date` …
 
-![&copy; W3C XML Schema Part 2: Datatypes, built-in datatypes](img/type-hierarchy.png)
+![&copy; W3C XML Schema Part 2: Datatypes, built-in datatypes](img/type-hierarchy.png){width=570px height=650px}
+
+\newpage
 
 On peut donc couvrir la majorité des cas qu’on rencontrera pour les types
 simples.
@@ -243,6 +249,8 @@ donnera par exemple :
 <format>123-AA</format>
 ```
 
+\newpage
+
 ##### Enumération #####
 
 ```xml
@@ -264,8 +272,6 @@ donnera par exemple :
 <departement>Seine-et-Marne</departement>
 ```
 
-\newpage
-
 ##### Liste #####
 
 ```xml
@@ -281,6 +287,8 @@ donnera par exemple :
 ```xml
 <liste>10000 20001 99999</liste>
 ```
+
+\newpage
 
 #### Les types complexes ####
 
@@ -310,8 +318,6 @@ donnera par exemple :
 ```xml
 <prix monnaie="euro">42.0</prix>
 ```
-
-\newpage
 
 On peut décider de réaliser une séquence d’éléments de types définis. Dans
 l’exemple suivant, on voit comment faire référence à un élément
@@ -388,8 +394,6 @@ donnera par exemple :
 </entiers>
 ```
 
-\newpage
-
 On peut enfin décrire une suite d’éléments simples sans ordre obligatoire :
 
 ```xml
@@ -461,6 +465,8 @@ donnera par exemple :
 </personne>
 ```
 
+\newpage
+
 #### Déclaration d'un schéma pour un XML ####
 
 Plusieurs notions entrent en jeu pour lier un document XML et son schéma,
@@ -475,8 +481,6 @@ espace de nommage qu'il convient de déclarer :
 >
 </monEspace:baliseRacine>
 ```
-
-\newpage
 
 Il est possible aussi d'indiquer que cet espace de nommage est celui par
 défaut pour éviter d'avoir à préfixer toutes les balises dans le document :
@@ -544,6 +548,8 @@ une seule ligne ! -->
 ...
 </CT_CrsCatalogue>
 ```
+
+\newpage
 
 ## XSL : la feuille de style du XML ##
 
@@ -626,6 +632,8 @@ Les espaces de noms associés à XSL sont :
 * pour XSLT[^xslt] : http://www.w3.org/1999/XSL/Transform ; 
 * pour XSL-FO[^xsl-fo] : http://www.w3.org/1999/XSL/Format/1.0 (formatage du XML)
 
+\newpage
+
 ### Les motifs (patterns) ###
 
 Les patterns sont les expressions utilisées pour sélectionner les nœuds d’un
@@ -684,6 +692,7 @@ XPATH[^xpath] que nous étudierons dans le paragraphe suivant.
 |                         | descendants                                          |
 +-------------------------+------------------------------------------------------+
 
+\newpage
 
 ### Le langage XPath ###
 
@@ -784,6 +793,8 @@ Le tableau ci-dessous présente tous les nœuds abrégés qui existent :
 |\|         |correspond à un ou                                  |
 +-----------+----------------------------------------------------+
 
+\newpage
+
 Sur ces axes nodaux, on applique des fonctions nodales dont les principales
 sont reprises dans le tableau suivant :
 
@@ -823,6 +834,8 @@ sont reprises dans le tableau suivant :
 |                                |position du nœud courant à l'intérieur  |
 |                                |du nœud parent                          |
 +--------------------------------+----------------------------------------+
+
+\newpage
 
 ### Les mots clés du langage XSLT ###
 
@@ -900,6 +913,8 @@ l’attribut :
 </xsl:element>
 ```
 
+\newpage
+
 On génère ainsi un fragment XML qui vaut :
 
 ```xml
@@ -910,8 +925,6 @@ On génère ainsi un fragment XML qui vaut :
     a2=" Valeur de l'attribut 2 " 
     apfx:nom_attribut="Valeur de l'attribut"/>
 ```
-
-\newpage
 
 L'élément `choose` combiné avec `when` et `otherwise`, permet de
 construire des tests conditionnels à l'instar des commandes switch de Java ou
@@ -961,6 +974,8 @@ Par convention, `transform` peut être utilisé pour les feuilles de style
 de transformation et `stylesheet` pour celles de formatage. Mais cela n'a
 aucun caractère obligatoire.
 
+\newpage
+
 ## Autres ressources ##
 
 * <http://xml.developpez.com/cours/>
@@ -968,6 +983,8 @@ aucun caractère obligatoire.
 * <http://www.gchagnon.fr/cours/xml/index.html>
 * <https://pages.lip6.fr/Jean-Francois.Perrot/inalco/XMLA/Cours2/XSLT/>
 
+
+\newpage
 
 ## Exercices ##
 
@@ -1082,6 +1099,8 @@ On commence par ré-écrire les `ELEMENT` et les `ATTLIST` :
         </xsd:complexType>
     </xsd:element>
 ```
+
+\newpage
 
 On définit les références entre éléments (identificateurs et liens) :
 
@@ -1258,6 +1277,8 @@ droite de la page "XSD Schema" et on clique sur le bouton `Check XSD Validity` !
 
 On s'arme de patience pour corriger les erreurs ^^
 
+\newpage
+
 On remplace la DTD interne par l'utilisation du schéma :
 
 ```xml
@@ -1302,6 +1323,8 @@ sur le bouton `Check XML Well Formed`.
 
 Enfin, une fois le schéma XML et le document XML corrigés, on valide le
 document XML au regard du schéma en cliquant sur le bouton `Check XML against XSD`.
+
+\newpage
 
 ## Exercice n°5 ##
 
@@ -1633,5 +1656,5 @@ _fin du document[^pandoc_gen]_
 [^xslt]: http://www.w3.org/TR/xslt
 [^xpath]: http://www.w3.org/TR/xpath
 [^xsl-fo]: http://www.w3.org/TR/xsl
-[^pandoc_gen]: document généré via $ `pandoc -s -N --toc -o XML2-A.pdf XML2-A.md`{.bash}
+[^pandoc_gen]: document généré via $ `pandoc -V fontsize=10pt -V geometry:"top=2cm, bottom=2cm, left=1cm, right=1cm" -s -N --toc -o XML2-A.pdf XML2-A.md`{.bash}
 
